@@ -21,7 +21,7 @@ const Hero: React.FC<{ title?: string; subtitle?: string }> = ({ title, subtitle
           <h1  className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight text-slate-900 dark:text-white leading-[1.05]">
             {title || 'Secure Digital'}
             <br />
-            <span className="bg-gradient-to-r from-[tomato] to-orange-500 bg-clip-text text-transparent">Banking Experience</span>
+            <span className="bg-gradient-to-r from-[tomato] to-orange-500 bg-clip-text text-transparent">Smart Banking</span>
           </h1>
           <p  className="mt-6 text-lg sm:text-xl text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed">
             {subtitle || 'Bank smarter with the most trusted fintech platform. Instant transfers, zero fees, world-class security — all in one app.'}
