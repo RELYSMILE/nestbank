@@ -4,7 +4,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from "@/components/theme-provider";
 import { Shield, LayoutDashboard, Send, History, User, LogOut, Moon, Sun, Settings, Users, Menu, X, CreditCard } from 'lucide-react';
 import { doc, getDoc, onSnapshot } from 'firebase/firestore';
-import { db } from '@/lib/config';
+import { db } from '@/lib/Config';
 
 const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, signOut } = useAuth();

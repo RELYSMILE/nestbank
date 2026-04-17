@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import { auth, db } from '../lib/config';
+import { auth, db } from '../lib/Config';
 import {
   doc,
   getDoc,

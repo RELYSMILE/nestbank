@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import { db } from '@/lib/config';
+import { db } from '@/lib/Config';
 import {
   collection,
   addDoc,

@@ -5,7 +5,7 @@ import {
   getDoc,
   setDoc
 } from 'firebase/firestore';
-import { db } from '@/lib/config';
+import { db } from '@/lib/Config';
 import DashboardLayout from '@/components/DashboardLayout';
 import { toast } from 'sonner';
 import { Loader2, Save } from 'lucide-react';

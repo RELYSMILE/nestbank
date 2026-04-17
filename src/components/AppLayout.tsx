@@ -7,7 +7,7 @@ import Trust from '@/components/landing/Trust';
 import Footer from '@/components/landing/Footer';
 
 import { doc, getDoc } from 'firebase/firestore';
-import { db } from '@/lib/config';
+import { db } from '@/lib/Config';
 import { onSnapshot } from 'firebase/firestore';
 
 const AppLayout: React.FC = () => {

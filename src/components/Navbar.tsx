@@ -4,7 +4,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from "@/components/theme-provider";
 import { Moon, Sun, Shield, LogOut, LayoutDashboard, Menu, X } from 'lucide-react';
 import { doc, getDoc, onSnapshot } from 'firebase/firestore';
-import { db } from '@/lib/config';
+import { db } from '@/lib/Config';
 
 const Navbar: React.FC<{ transparent?: boolean }> = ({ transparent }) => {
   const { user, signOut } = useAuth();

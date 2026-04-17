@@ -9,7 +9,7 @@ import {
   doc,
   updateDoc
 } from 'firebase/firestore';
-import { db } from '@/lib/config';
+import { db } from '@/lib/Config';
 import DashboardLayout from '@/components/DashboardLayout';
 import { Users, DollarSign, Activity, Search, Edit2, Ban, CheckCircle2, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';

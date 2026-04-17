@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
-import { auth, db } from '../lib/config';
+import { auth, db } from '../lib/Config';
 import { useAuth } from '@/contexts/AuthContext';
 import { countries } from '@/lib/countries';
 import { Shield, Eye, EyeOff, Loader2, ArrowLeft, ArrowRight, Check } from 'lucide-react';

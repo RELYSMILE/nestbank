@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import { auth, db } from '../lib/config';
+import { auth, db } from '../lib/Config';
 import {
   collection,
   query,

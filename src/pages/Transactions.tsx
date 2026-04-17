@@ -7,7 +7,7 @@ import {
   orderBy,
   onSnapshot
 } from 'firebase/firestore';
-import { db } from '@/lib/config';
+import { db } from '@/lib/Config';
 import DashboardLayout from '@/components/DashboardLayout';
 import { ArrowUpRight, ArrowDownLeft, Search, Download, Share2 } from 'lucide-react';
 import jsPDF from "jspdf";
