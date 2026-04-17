@@ -15,7 +15,7 @@ export default defineConfig(({ mode }) => ({
           registerType: 'autoUpdate',
           includeAssets: ['android-launchericon-192-192.png', 'android-launchericon-512-512.png', 'LargeTile.scale-400.png'],
           manifest: {
-            name: 'My Cool App',
+            name: 'Nest Bank',
             short_name: 'Nest Bank',
             description: 'Digital Banking Hub',
             theme_color: '#ffffff',
