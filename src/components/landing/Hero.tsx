@@ -27,7 +27,7 @@ const Hero: React.FC<{ title?: string; subtitle?: string }> = ({ title, subtitle
             {subtitle || 'Bank smarter with the most trusted fintech platform. Instant transfers, zero fees, world-class security — all in one app.'}
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
-            <Link to="/signup" className="group inline-flex items-center gap-2 px-7 py-4 rounded-xl bg-[#0b24f3] hover:bg-red-600 text-white font-semibold shadow-xl shadow-#0b24f3-500/30 hover:shadow-2xl hover:scale-[1.03] transition-all">
+            <Link to="/signup" className="group inline-flex items-center gap-2 px-7 py-4 rounded-xl bg-[#0b24f3] hover:bg-[#0b24f3]/80 text-white font-semibold shadow-xl shadow-[#0b24f3]/30 hover:shadow-2xl hover:scale-[1.03] transition-all">
               Get Started Free
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
