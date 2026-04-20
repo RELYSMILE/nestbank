@@ -233,7 +233,7 @@ useEffect(() => {
               className={`inline-flex items-center gap-2 px-5 py-3 rounded-xl text-white font-semibold shadow-lg transition
                 ${user.frozen
                   ? 'bg-gray-400 cursor-not-allowed'
-                  : 'bg-[tomato] hover:bg-red-600 hover:scale-[1.02] shadow-red-500/30'}
+                  : 'bg-[#0b24f3] hover:bg-[#0b24f3]/80 hover:scale-[1.02] shadow-[#0b24f3]/30'}
               `}
             >
               <Plus className="w-4 h-4" />
@@ -253,7 +253,7 @@ useEffect(() => {
               </div>
               <h3 className="text-xl font-bold text-slate-900 dark:text-white">No cards yet</h3>
               <p className="text-slate-500 mt-2 mb-6">Create your first virtual card to start shopping safely online.</p>
-              <button onClick={() => setShowCreate(true)} disabled={user.frozen} className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[tomato] text-white font-semibold shadow-lg shadow-red-500/30 disabled:opacity-50">
+              <button onClick={() => setShowCreate(true)} disabled={user.frozen} className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#0b24f3] text-white font-semibold shadow-lg shadow-[#0b24f3]/30 disabled:opacity-50">
                 <Plus className="w-4 h-4" /> Create your first card
               </button>
             </div>
@@ -338,7 +338,7 @@ useEffect(() => {
 
               <div className="flex gap-3 mt-6">
                 <button onClick={() => setShowCreate(false)} className="flex-1 py-3 rounded-xl border border-slate-200 dark:border-slate-700 font-semibold">Cancel</button>
-                <button onClick={createCard} disabled={creating || user.frozen} className="flex-1 py-3 rounded-xl bg-[tomato] hover:bg-red-600 text-white font-semibold shadow-lg shadow-red-500/30 disabled:opacity-50 flex items-center justify-center gap-2">
+                <button onClick={createCard} disabled={creating || user.frozen} className="flex-1 py-3 rounded-xl bg-[#0b24f3] hover:bg-[#0b24f3]/80 text-white font-semibold shadow-lg shadow-[#0b24f3]/30 disabled:opacity-50 flex items-center justify-center gap-2">
                   {creating && <Loader2 className="w-4 h-4 animate-spin" />}
                   Create Card
                 </button>

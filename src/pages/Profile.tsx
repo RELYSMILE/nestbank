@@ -27,7 +27,7 @@ const Profile: React.FC = () => {
         <h1 className="text-3xl font-black text-slate-900 dark:text-white mb-2">Profile</h1>
         <p className="text-slate-500 mb-8">Your account information</p>
 
-        <div className="rounded-3xl bg-gradient-to-br from-[tomato] to-orange-600 p-8 text-white shadow-xl mb-6">
+        <div className="rounded-3xl bg-gradient-to-br from-[#0b24f3] to-[#0b24f3] p-8 text-white shadow-xl mb-6">
           <div className="flex items-center gap-5">
             <div className="w-20 h-20 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-4xl font-black border-2 border-white/30">
               {user.name.charAt(0).toUpperCase()}

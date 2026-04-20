@@ -166,11 +166,11 @@ Date: ${
         <div className="flex flex-col sm:flex-row gap-3 mb-6">
           <div className="relative flex-1">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search by name or account..." className="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:border-[tomato] outline-none" />
+            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search by name or account..." className="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:border-[#0b24f3] focus:ring-2 focus:ring-[#0b24f3]/20 outline-none" />
           </div>
           <div className="flex gap-2">
             {(['all', 'sent', 'received'] as const).map((f) => (
-              <button key={f} onClick={() => setFilter(f)} className={`px-4 py-2.5 rounded-xl font-semibold text-sm capitalize transition ${filter === f ? 'bg-[tomato] text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}`}>{f}</button>
+              <button key={f} onClick={() => setFilter(f)} className={`px-4 py-2.5 rounded-xl font-semibold text-sm capitalize transition ${filter === f ? 'bg-[#0b24f3] text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}`}>{f}</button>
             ))}
           </div>
         </div>
@@ -221,7 +221,7 @@ Date: ${
       className="w-full max-w-md rounded-3xl bg-white dark:bg-slate-900 shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden animate-in fade-in zoom-in-95"
     >
       {/* HEADER */}
-      <div className="bg-gradient-to-r from-[tomato] to-orange-500 p-5 text-white">
+      <div className="bg-gradient-to-r from-[#0b24f3] to-[#0b24f3] p-5 text-white">
         <div className="flex justify-between items-center">
           <div>
             <p className="text-xs uppercase tracking-widest opacity-80">Transaction</p>
@@ -321,7 +321,7 @@ Date: ${
         <div className="mt-6 grid grid-cols-2 gap-3">
           <button
             onClick={() => downloadReceipt(selectedTx)}
-            className="flex items-center justify-center gap-2 bg-[tomato] hover:bg-red-600 text-white font-semibold py-3 rounded-xl transition"
+            className="flex items-center justify-center gap-2 bg-[#0b24f3] hover:bg-[#0b24f3]/80 text-white font-semibold py-3 rounded-xl transition"
           >
             <Download className="w-5 h-5" />
             <span className="sr-only">Download</span>

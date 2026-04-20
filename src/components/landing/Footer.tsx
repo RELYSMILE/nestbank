@@ -9,15 +9,15 @@ const Footer: React.FC = () => {
         <div className="grid md:grid-cols-5 gap-10 mb-12">
           <div className="md:col-span-2">
             <Link to="/" className="flex items-center gap-2.5 mb-4">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[tomato] to-orange-600 flex items-center justify-center">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#0b24f3] to-[#0b24f3] flex items-center justify-center">
                 <Shield className="w-5 h-5 text-white" strokeWidth={2.5} />
               </div>
-              <span className="text-xl font-black text-white">NEST<span className="text-[tomato]">BANK</span></span>
+              <span className="text-xl font-black text-white">NEST<span className="text-[#0b24f3]">BANK</span></span>
             </Link>
             <p className="text-sm text-slate-400 max-w-sm leading-relaxed">The future of digital banking. Secure, fast, and built for the modern world. Join millions who trust NestBank.</p>
             <div className="flex gap-3 mt-6">
               {[Twitter, Facebook, Instagram, Linkedin].map((Icon, i) => (
-                <a key={i} href="#" className="w-10 h-10 rounded-full bg-slate-800 hover:bg-[tomato] flex items-center justify-center transition-colors">
+                <a key={i} href="#" className="w-10 h-10 rounded-full bg-slate-800 hover:bg-[#0b24f3] flex items-center justify-center transition-colors">
                   <Icon className="w-4 h-4" />
                 </a>
               ))}
@@ -33,7 +33,7 @@ const Footer: React.FC = () => {
               <h4 className="text-white font-bold mb-4">{col.title}</h4>
               <ul className="space-y-3">
                 {col.links.map((l) => (
-                  <li key={l}><a href="#" className="text-sm text-slate-400 hover:text-[tomato] transition">{l}</a></li>
+                  <li key={l}><a href="#" className="text-sm text-slate-400 hover:text-[#0b24f3] transition">{l}</a></li>
                 ))}
               </ul>
             </div>

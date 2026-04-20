@@ -54,12 +54,12 @@ const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ children }) 
       <aside className={`${mobileOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 fixed lg:sticky top-0 left-0 z-50 w-64 h-screen bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col transition-transform`}>
         <div className="p-6 border-b border-slate-200 dark:border-slate-800">
           <Link to="/" className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[tomato] to-orange-600 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#0b24f3] to-[#0b24f3] flex items-center justify-center">
               <Shield className="w-5 h-5 text-white" strokeWidth={2.5} />
             </div>
             <span className="text-xl font-black tracking-tight text-slate-900 dark:text-white">
             {first}
-            <span className="text-[tomato]">
+            <span className="text-[#0b24f3]">
               {second}
             </span>
           </span>
@@ -74,7 +74,7 @@ const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ children }) 
                 key={it.to}
                 to={it.to}
                 onClick={() => setMobileOpen(false)}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition ${active ? 'bg-[tomato] text-white shadow-lg shadow-red-500/20' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'}`}
+                className={`flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition ${active ? 'bg-[#0b24f3] text-white shadow-lg shadow-[#0b24f3]/20' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'}`}
               >
                 <it.icon className="w-4 h-4" />
                 {it.label}
@@ -108,7 +108,7 @@ const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ children }) 
               <p className="text-sm font-semibold text-slate-900 dark:text-white">{user?.name}</p>
               <p className="text-xs text-slate-500">{user?.role === 'admin' ? 'Administrator' : user?.account_number}</p>
             </div>
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[tomato] to-orange-500 flex items-center justify-center text-white font-bold">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#0b24f3] to-[#0b24f3] flex items-center justify-center text-white font-bold">
               {user?.name?.charAt(0).toUpperCase()}
             </div>
           </div>

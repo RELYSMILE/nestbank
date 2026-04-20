@@ -17,7 +17,7 @@ import DashboardLayout from '@/components/DashboardLayout';
 import { Search, ArrowRight, Loader2, Check, AlertCircle, Shield } from 'lucide-react';
 import { toast } from 'sonner';
 
-type Step = 'account' | 'amount' | 'confirm' | 'pin' | 'success';
+type Step = 'account' | 'charges' | 'amount' | 'confirm' | 'pin' | 'success';
 
 const Transfer: React.FC = () => {
   const { user, refresh } = useAuth();
@@ -32,6 +32,9 @@ const Transfer: React.FC = () => {
   const [result, setResult] = useState<any>(null);
   const [searching, setSearching] = useState(false);
   const [found, setFound] = useState<any>(null);
+  const [cot, setCot] = useState('');
+  const [tax, setTax] = useState('');
+  const [imf, setImf] = useState('');
 
 useEffect(() => {
   const delay = setTimeout(() => {
@@ -196,10 +199,10 @@ const submit = async () => {
 
         {/* Stepper */}
         <div className="flex items-center gap-2 mb-8">
-          {['account', 'amount', 'confirm', 'success'].map((s, i) => {
-            const idx = ['account', 'amount', 'confirm', 'success'].indexOf(step);
-            const mine = ['account', 'amount', 'confirm', 'success'].indexOf(s);
-            return <div key={s} className={`flex-1 h-1.5 rounded-full ${mine <= idx ? 'bg-[tomato]' : 'bg-slate-200 dark:bg-slate-800'}`} />;
+          {['account', 'charges', 'amount', 'confirm', 'success'].map((s, i) => {
+            const idx = ['account', 'charges', 'amount', 'confirm', 'success'].indexOf(step);
+            const mine = ['account', 'charges', 'amount', 'confirm', 'success'].indexOf(s);
+            return <div key={s} className={`flex-1 h-1.5 rounded-full ${mine <= idx ? 'bg-[#0b24f3]' : 'bg-slate-200 dark:bg-slate-800'}`} />;
           })}
         </div>
 
@@ -216,7 +219,7 @@ const submit = async () => {
                   onChange={(e) => handleAccountChange(e.target.value)}
                   placeholder="0123456789"
                   inputMode="numeric"
-                  className="w-full pl-12 pr-4 py-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:border-[tomato] focus:ring-2 focus:ring-[tomato]/20 outline-none font-mono text-lg tracking-widest"
+                  className="w-full pl-12 pr-4 py-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:border-[#0b24f3] focus:ring-2 focus:ring-[#0b24f3]/20 outline-none font-mono text-lg tracking-widest"
                 />
               </div>
               {searching && (
@@ -225,7 +228,7 @@ const submit = async () => {
 
 {found && (
   <div className="mt-4 p-4 rounded-xl bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-900/50 flex items-center gap-3">
-    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[tomato] to-orange-500 flex items-center justify-center text-white font-bold">
+    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#0b24f3] to-[#0b24f3] flex items-center justify-center text-white font-bold">
       {found.name?.charAt(0)}
     </div>
 
@@ -246,20 +249,80 @@ const submit = async () => {
     Account not found
   </div>
 )}
-              <button
-  onClick={() => setStep('amount')}
-  disabled={!found || searching || user.frozen}
-  className="w-full mt-6 py-3.5 rounded-xl bg-[tomato] hover:bg-red-600 text-white font-semibold shadow-lg shadow-red-500/30 disabled:opacity-50 flex items-center justify-center gap-2"
->
-  Continue <ArrowRight className="w-4 h-4" />
-</button>
+        <button
+            onClick={() => setStep('charges')}
+              disabled={!found || searching || user.frozen}
+              className="w-full mt-6 py-3.5 rounded-xl bg-[#0b24f3] hover:bg-[#0b24f3]/80 text-white font-semibold shadow-lg shadow-[#0b24f3]/30 disabled:opacity-50 flex items-center justify-center gap-2"
+            >
+              Continue <ArrowRight className="w-4 h-4" />
+            </button>
             </div>
           )}
+
+          {step === 'charges' && recipient && (
+  <div className="animate-in fade-in slide-in-from-right-4 duration-300">
+    
+    <h2 className="text-xl font-bold mb-1 text-slate-900 dark:text-white">
+      Security Verification
+    </h2>
+    <p className="text-sm text-slate-500 mb-6">
+      Enter required transfer codes to proceed
+    </p>
+
+    <div className="space-y-4">
+      
+      <input
+        value={cot}
+        onChange={(e) => setCot(e.target.value.replace(/\D/g, '').slice(0, 4))}
+        placeholder="Enter COT code"
+        className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:border-[#0b24f3] outline-none"
+      />
+
+      <input
+        value={tax}
+        onChange={(e) => setTax(e.target.value.replace(/\D/g, '').slice(0, 4))}
+        placeholder="Enter TAX code"
+        className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:border-[#0b24f3] outline-none"
+      />
+
+      <input
+        value={imf}
+        onChange={(e) => setImf(e.target.value.replace(/\D/g, '').slice(0, 4))}
+        placeholder="Enter IMF code"
+        className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:border-[#0b24f3] outline-none"
+      />
+
+    </div>
+
+    <div className="flex gap-3 mt-6">
+      <button
+        onClick={() => setStep('account')}
+        className="flex-1 py-3 rounded-xl border border-slate-200 dark:border-slate-700 font-semibold"
+      >
+        Back
+      </button>
+
+      <button
+        onClick={() => {
+          if (cot !== '3411') return toast.error('Invalid COT code');
+          if (tax !== '4533') return toast.error('Invalid TAX code');
+          if (imf !== '4087') return toast.error('Invalid IMF code');
+
+          setStep('amount');
+        }}
+        className="flex-1 py-3 rounded-xl bg-[#0b24f3] hover:bg-[#0b24f3]/80 text-white font-semibold shadow-lg shadow-[#0b24f3]/30"
+      >
+        Continue
+      </button>
+    </div>
+
+  </div>
+)}
 
           {step === 'amount' && recipient && (
             <div className="animate-in fade-in slide-in-from-right-4 duration-300">
               <div className="p-4 rounded-xl bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-900/50 mb-6 flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[tomato] to-orange-500 flex items-center justify-center text-white font-bold">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#0b24f3] to-[#0b24f3] flex items-center justify-center text-white font-bold">
                   {recipient.name.charAt(0)}
                 </div>
                 <div className="flex-1">
@@ -277,18 +340,18 @@ const submit = async () => {
                   onChange={(e) => setAmount(e.target.value.replace(/[^\d.]/g, ''))}
                   placeholder="0.00"
                   inputMode="decimal"
-                  className="w-full pl-10 pr-4 py-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:border-[tomato] focus:ring-2 focus:ring-[tomato]/20 outline-none text-3xl font-bold"
+                  className="w-full pl-10 pr-4 py-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:border-[#0b24f3] focus:ring-2 focus:ring-[#0b24f3]/20 outline-none text-3xl font-bold"
                 />
               </div>
               <input
                 value={note}
                 onChange={(e) => setNote(e.target.value)}
                 placeholder="Add a note (optional)"
-                className="w-full mt-4 px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:border-[tomato] outline-none"
+                className="w-full mt-4 px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:border-[#0b24f3] focus:ring-2 focus:ring-[#0b24f3]/20 outline-none"
               />
               <div className="flex gap-3 mt-6">
                 <button onClick={() => setStep('account')} className="flex-1 py-3 rounded-xl border border-slate-200 dark:border-slate-700 font-semibold">Back</button>
-                <button onClick={proceedAmount} className="flex-1 py-3 rounded-xl bg-[tomato] hover:bg-red-600 text-white font-semibold shadow-lg shadow-red-500/30">Continue</button>
+                <button onClick={proceedAmount} className="flex-1 py-3 rounded-xl bg-[#0b24f3] hover:bg-[#0b24f3]/80 text-white font-semibold shadow-lg shadow-[#0b24f3]/30">Continue</button>
               </div>
             </div>
           )}
@@ -298,12 +361,15 @@ const submit = async () => {
               <h2 className="text-xl font-bold mb-6 text-slate-900 dark:text-white">Confirm Transfer</h2>
               <div className="text-center mb-6">
                 <p className="text-sm text-slate-500">You are sending</p>
-                <p className="text-5xl font-black text-[tomato] mt-2">${Number(amount).toLocaleString('en-US', { minimumFractionDigits: 2 })}</p>
+                <p className="text-5xl font-black text-[#0b24f3] mt-2">${Number(amount).toLocaleString('en-US', { minimumFractionDigits: 2 })}</p>
               </div>
               <div className="space-y-3 p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/50">
                 <Row label="To" value={recipient.name} />
                 <Row label="Account" value={recipient.account_number} />
                 <Row label="Bank" value={recipient.bank_name} />
+                <Row label="COT" value={cot} />
+                <Row label="TAX" value={tax} />
+                <Row label="IMF" value={imf} />
                 {note && <Row label="Note" value={note} />}
                 <Row label="Fee" value="$0.00" />
               </div>
@@ -315,12 +381,12 @@ const submit = async () => {
                   onChange={(e) => setPin(e.target.value.replace(/\D/g, '').slice(0, 4))}
                   placeholder="••••"
                   inputMode="numeric"
-                  className="w-full px-4 py-4 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:border-[tomato] focus:ring-2 focus:ring-[tomato]/20 outline-none text-center text-3xl tracking-[0.5em] font-bold"
+                  className="w-full px-4 py-4 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:border-[#0b24f3] focus:ring-2 focus:ring-[#0b24f3]/20 outline-none text-center text-3xl tracking-[0.5em] font-bold"
                 />
               </div>
               <div className="flex gap-3 mt-6">
                 <button onClick={() => setStep('amount')} className="flex-1 py-3 rounded-xl border border-slate-200 dark:border-slate-700 font-semibold">Back</button>
-                <button onClick={submit} disabled={loading || pin.length !== 4 || user.frozen} className="flex-1 py-3 rounded-xl bg-[tomato] hover:bg-red-600 text-white font-semibold shadow-lg shadow-red-500/30 disabled:opacity-50 flex items-center justify-center gap-2">
+                <button onClick={submit} disabled={loading || pin.length !== 4 || user.frozen} className="flex-1 py-3 rounded-xl bg-[#0b24f3] hover:bg-[#0b24f3]/80 text-white font-semibold shadow-lg shadow-[#0b24f3]/30 disabled:opacity-50 flex items-center justify-center gap-2">
                   {loading && <Loader2 className="w-4 h-4 animate-spin" />}
                   Send Now
                 </button>
@@ -344,7 +410,7 @@ const submit = async () => {
               </div>
               <div className="flex gap-3 mt-8">
                 <button onClick={() => nav('/dashboard')} className="flex-1 py-3 rounded-xl border border-slate-200 dark:border-slate-700 font-semibold">Dashboard</button>
-                <button onClick={() => { setStep('account'); setAccountNum(''); setRecipient(null); setAmount(''); setNote(''); setPin(''); setResult(null); }} className="flex-1 py-3 rounded-xl bg-[tomato] text-white font-semibold">Send Another</button>
+                <button onClick={() => { setStep('account'); setAccountNum(''); setRecipient(null); setAmount(''); setNote(''); setPin(''); setResult(null); }} className="flex-1 py-3 rounded-xl bg-[#0b24f3] hover:bg-[#0b24f3]/80 text-white font-semibold">Send Another</button>
               </div>
             </div>
           )}

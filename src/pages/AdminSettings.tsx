@@ -78,9 +78,9 @@ const AdminSettings: React.FC = () => {
           <div>
             <label className="block text-sm font-semibold text-slate-700 dark:text-slate-200 mb-2">Hero Subtitle</label>
             <textarea value={settings.hero_subtitle} onChange={(e) => setSettings({ ...settings, hero_subtitle: e.target.value })} rows={3}
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:border-[tomato] outline-none" />
+              className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:border-[#0b24f3] focus:ring-2 focus:ring-[#0b24f3]/20 outline-none" />
           </div>
-          <button onClick={save} disabled={loading} className="w-full py-3 rounded-xl bg-[tomato] hover:bg-red-600 text-white font-semibold shadow-lg shadow-red-500/30 flex items-center justify-center gap-2 disabled:opacity-50">
+          <button onClick={save} disabled={loading} className="w-full py-3 rounded-xl bg-[#0b24f3] hover:bg-[#0b24f3]/80 text-white font-semibold shadow-lg shadow-[#0b24f3]/30 flex items-center justify-center gap-2 disabled:opacity-50">
             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />} Save Settings
           </button>
         </div>

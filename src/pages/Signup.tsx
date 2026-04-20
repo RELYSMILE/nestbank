@@ -93,20 +93,20 @@ const submit = async () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-red-50 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 flex items-center justify-center p-4 sm:p-8">
       <div className="w-full max-w-2xl">
-        <Link to="/" className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-[tomato] mb-6"><ArrowLeft className="w-4 h-4" /> Back</Link>
+        <Link to="/" className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-[#0b24f3] mb-6"><ArrowLeft className="w-4 h-4" /> Back</Link>
 
         <div className="flex items-center gap-2.5 mb-8">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[tomato] to-orange-600 flex items-center justify-center shadow-lg shadow-red-500/20">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#0b24f3] to-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/20">
             <Shield className="w-6 h-6 text-white" strokeWidth={2.5} />
           </div>
-          <span className="text-2xl font-black text-slate-900 dark:text-white">NEST<span className="text-[tomato]">BANK</span></span>
+          <span className="text-2xl font-black text-slate-900 dark:text-white">NEST<span className="text-[#0b24f3]">BANK</span></span>
         </div>
 
         {/* Stepper */}
         <div className="flex items-center gap-2 mb-10">
           {[1, 2, 3].map((n) => (
             <React.Fragment key={n}>
-              <div className={`flex-1 h-2 rounded-full transition-all ${step >= n ? 'bg-[tomato]' : 'bg-slate-200 dark:bg-slate-800'}`} />
+              <div className={`flex-1 h-2 rounded-full transition-all ${step >= n ? 'bg-[#0b24f3]' : 'bg-slate-200 dark:bg-slate-800'}`} />
             </React.Fragment>
           ))}
         </div>
@@ -189,10 +189,10 @@ const submit = async () => {
               <button onClick={() => setStep(step - 1)} className="flex-1 sm:flex-none px-6 py-3 rounded-xl border border-slate-200 dark:border-slate-700 font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition">Back</button>
             )}
             {step < 3 && (
-              <button onClick={next} className="flex-1 px-6 py-3 rounded-xl bg-[tomato] hover:bg-red-600 text-white font-semibold shadow-lg shadow-red-500/30 hover:scale-[1.02] transition flex items-center justify-center gap-2">Continue <ArrowRight className="w-4 h-4" /></button>
+              <button onClick={next} className="flex-1 px-6 py-3 rounded-xl bg-[#0b24f3] hover:bg-blue-600 text-white font-semibold shadow-lg shadow-blue-500/30 hover:scale-[1.02] transition flex items-center justify-center gap-2">Continue <ArrowRight className="w-4 h-4" /></button>
             )}
             {step === 3 && (
-              <button onClick={submit} disabled={loading} className="flex-1 px-6 py-3 rounded-xl bg-[tomato] hover:bg-red-600 text-white font-semibold shadow-lg shadow-red-500/30 hover:scale-[1.02] transition flex items-center justify-center gap-2 disabled:opacity-50">
+              <button onClick={submit} disabled={loading} className="flex-1 px-6 py-3 rounded-xl bg-[#0b24f3] hover:bg-blue-600 text-white font-semibold shadow-lg shadow-blue-500/30 hover:scale-[1.02] transition flex items-center justify-center gap-2 disabled:opacity-50">
                 {loading && <Loader2 className="w-4 h-4 animate-spin" />}
                 Create Account
               </button>
@@ -200,7 +200,7 @@ const submit = async () => {
           </div>
         </div>
 
-        <p className="mt-6 text-sm text-center text-slate-500">Already have an account? <Link to="/login" className="text-[tomato] font-semibold hover:underline">Sign in</Link></p>
+        <p className="mt-6 text-sm text-center text-slate-500">Already have an account? <Link to="/login" className="text-[#0b24f3] font-semibold hover:underline">Sign in</Link></p>
       </div>
     </div>
   );
@@ -210,7 +210,7 @@ const Field: React.FC<{ label: string; value: string; onChange: (v: string) => v
   <div>
     <label className="block text-sm font-semibold text-slate-700 dark:text-slate-200 mb-2">{label}</label>
     <input type={type} value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} maxLength={maxLength}
-      className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:border-[tomato] focus:ring-2 focus:ring-[tomato]/20 outline-none transition" />
+      className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:border-[#0b24f3] focus:ring-2 focus:ring-[#0b24f3]/20 outline-none transition" />
   </div>
 );
 

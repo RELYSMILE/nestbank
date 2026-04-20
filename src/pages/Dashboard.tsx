@@ -119,7 +119,7 @@ const unsub2 = onSnapshot(q2, (snapshot) => {
           )}
 
         {/* Balance Card */}
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-red-950 to-slate-900 p-8 text-white shadow-2xl shadow-red-500/20">
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-[#0b24f3] to-slate-900 p-8 text-white shadow-2xl shadow-red-500/20">
           <div className="absolute top-0 right-0 w-96 h-96 bg-[tomato] opacity-20 rounded-full blur-[120px]" />
           <div className="relative">
             <div className="flex justify-between items-start">
