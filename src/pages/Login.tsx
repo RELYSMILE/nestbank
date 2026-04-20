@@ -125,14 +125,14 @@ useEffect(() => {
               </div>
 
               <div className="flex justify-end">
-  <button
-    type="button"
-    onClick={handleResetPassword}
-    className="text-sm text-[#0b24f3] hover:underline font-semibold"
-  >
-    Forgot Password?
-  </button>
-</div>
+                <button
+                  type="button"
+                  onClick={handleResetPassword}
+                  className="text-sm text-[#0b24f3] hover:underline font-semibold"
+                >
+                  Forgot Password?
+                </button>
+              </div>
             </div>
             <button type="submit" disabled={loading} className="w-full py-3.5 rounded-xl bg-[#0b24f3] hover:bg-blue-600 text-white font-semibold shadow-lg shadow-blue-500/30 hover:shadow-xl hover:scale-[1.02] transition disabled:opacity-50 disabled:scale-100 flex items-center justify-center gap-2">
               {loading && <Loader2 className="w-4 h-4 animate-spin" />}
