@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { sendPasswordResetEmail } from 'firebase/auth';
+import { auth } from '@/lib/Config';
 import { Shield, Eye, EyeOff, Loader2, ArrowLeft } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -43,36 +45,35 @@ useEffect(() => {
         return 'Login failed. Please try again';
     }
   };
-
-const submit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setLoading(true);
-
-  try {
-    await signIn(email, password);
-
-    // Wait a bit for user state to update
-    setTimeout(() => {
-      if (user?.blocked) {
-        toast.error('Your account has been blocked');
-        return;
-      }
-
-      toast.success('Welcome back!');
-      nav('/dashboard');
-    }, 500);
-
-  } catch (err: any) {
-    toast.error(err.message || 'Login failed');
-  } finally {
-    setLoading(false);
-  }
-};
     } finally {
       setLoading(false);
     }
   };
 
+  const handleResetPassword = async () => {
+  if (!email) {
+    toast.error('Enter your email first');
+    return;
+  }
+
+  try {
+    await sendPasswordResetEmail(auth, email);
+    toast.success('Password reset email sent');
+  } catch (err: any) {
+    const getFirebaseError = (code: string) => {
+      switch (code) {
+        case 'auth/user-not-found':
+          return 'No account found with this email';
+        case 'auth/invalid-email':
+          return 'Invalid email address';
+        default:
+          return 'Failed to send reset email';
+      }
+    };
+
+    toast.error(getFirebaseError(err.code));
+  }
+};
   return (
     <div className="min-h-screen flex">
 <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 relative overflow-hidden p-12 items-center justify-center">
@@ -122,6 +123,16 @@ const submit = async (e: React.FormEvent) => {
                   {show ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
               </div>
+
+              <div className="flex justify-end">
+  <button
+    type="button"
+    onClick={handleResetPassword}
+    className="text-sm text-[#0b24f3] hover:underline font-semibold"
+  >
+    Forgot Password?
+  </button>
+</div>
             </div>
             <button type="submit" disabled={loading} className="w-full py-3.5 rounded-xl bg-[#0b24f3] hover:bg-blue-600 text-white font-semibold shadow-lg shadow-blue-500/30 hover:shadow-xl hover:scale-[1.02] transition disabled:opacity-50 disabled:scale-100 flex items-center justify-center gap-2">
               {loading && <Loader2 className="w-4 h-4 animate-spin" />}

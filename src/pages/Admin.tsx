@@ -7,11 +7,12 @@ import {
   onSnapshot,
   getDocs,
   doc,
-  updateDoc
+  updateDoc,
+  deleteDoc
 } from 'firebase/firestore';
 import { db } from '@/lib/Config';
 import DashboardLayout from '@/components/DashboardLayout';
-import { Users, DollarSign, Activity, Search, Edit2, Ban, CheckCircle2, Loader2, Snowflake  } from 'lucide-react';
+import { Users, DollarSign, Activity, Search, Edit2, Ban, CheckCircle2, Loader2, Snowflake, Trash2   } from 'lucide-react';
 import { toast } from 'sonner';
 
 const Admin: React.FC = () => {
@@ -147,6 +148,20 @@ const toggleFreeze = async (u: any) => {
   }
 };
 
+const deleteUser = async (u: any) => {
+  const confirmDelete = window.confirm(`Delete ${u.name}? This action cannot be undone.`);
+
+  if (!confirmDelete) return;
+
+  try {
+    await deleteDoc(doc(db, 'nest_users', u.uid));
+    toast.success('User deleted successfully');
+  } catch (err: any) {
+    console.error("DELETE ERROR:", err);
+    toast.error(err.message || 'Failed to delete user');
+  }
+};
+
 const formatDate = (d: any) => {
   if (!d) return '—';
   return d?.toDate
@@ -225,6 +240,19 @@ const formatDate = (d: any) => {
                             <Edit2 className="w-4 h-4" />
                           </button>
 
+                          {/* FREEZE */}
+                          <button
+                            onClick={() => toggleFreeze(u)}
+                            className="p-1.5 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700"
+                            title={u.frozen ? 'Unfreeze account' : 'Freeze account'}
+                          >
+                            <Snowflake
+                              className={`w-4 h-4 ${
+                                u.frozen ? 'text-blue-600' : 'text-slate-500'
+                              }`}
+                            />
+                          </button>
+
                           {/* BLOCK */}
                           <button
                             onClick={() => toggleBlock(u)}
@@ -238,17 +266,13 @@ const formatDate = (d: any) => {
                             )}
                           </button>
 
-                          {/* FREEZE */}
+                          {/* DELETE */}
                           <button
-                            onClick={() => toggleFreeze(u)}
-                            className="p-1.5 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700"
-                            title={u.frozen ? 'Unfreeze account' : 'Freeze account'}
+                            onClick={() => deleteUser(u)}
+                            className="p-1.5 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/30"
+                            title="Delete user"
                           >
-                            <Snowflake
-                              className={`w-4 h-4 ${
-                                u.frozen ? 'text-blue-600' : 'text-slate-500'
-                              }`}
-                            />
+                            <Trash2 className="w-4 h-4 text-red-600" />
                           </button>
                         </div>
                       </td>
