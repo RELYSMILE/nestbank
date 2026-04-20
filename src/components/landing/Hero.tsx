@@ -1,37 +1,37 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ShieldCheck, Zap, Globe } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Zap, Globe, Users } from 'lucide-react';
 
 const Hero: React.FC<{ title?: string; subtitle?: string }> = ({ title, subtitle }) => {
   return (
     <section className="relative overflow-hidden pt-24 pb-20 sm:pt-32 sm:pb-28">
       {/* Decorative gradient blobs */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-20 left-1/4 w-96 h-96 bg-[tomato] opacity-20 rounded-full blur-[120px] animate-pulse" />
+        <div className="absolute top-20 left-1/4 w-96 h-96 bg-[#0b24f3] opacity-20 rounded-full blur-[120px] animate-pulse" />
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-orange-400 opacity-20 rounded-full blur-[120px]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,99,71,0.08),transparent_60%)]" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
         <div className="animate-in fade-in slide-in-from-left-8 duration-700">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-red-50 dark:bg-red-950/30 border border-red-100 dark:border-red-900/50 text-[tomato] text-xs font-semibold mb-6">
-            <span className="w-2 h-2 bg-[tomato] rounded-full animate-pulse" />
-            Trusted by 1,252,000+ customers worldwide
-          </div>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900/50 text-[#0b24f3] text-xs font-semibold mb-6">
+          <span className="w-2 h-2 bg-[#0b24f3] rounded-full animate-pulse" />
+          Trusted by 1,252,000+ customers worldwide
+        </div>
           <h1  className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight text-slate-900 dark:text-white leading-[1.05]">
             {title || 'Secure Digital'}
             <br />
-            <span className="bg-gradient-to-r from-[tomato] to-orange-500 bg-clip-text text-transparent">Smart Banking</span>
+            <span className="bg-gradient-to-r from-[#0b24f3] to-[#0b24f3] bg-clip-text text-transparent">Smart Banking</span>
           </h1>
           <p  className="mt-6 text-lg sm:text-xl text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed">
             {subtitle || 'Bank smarter with the most trusted fintech platform. Instant transfers, zero fees, world-class security — all in one app.'}
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
-            <Link to="/signup" className="group inline-flex items-center gap-2 px-7 py-4 rounded-xl bg-[tomato] hover:bg-red-600 text-white font-semibold shadow-xl shadow-red-500/30 hover:shadow-2xl hover:scale-[1.03] transition-all">
+            <Link to="/signup" className="group inline-flex items-center gap-2 px-7 py-4 rounded-xl bg-[#0b24f3] hover:bg-red-600 text-white font-semibold shadow-xl shadow-#0b24f3-500/30 hover:shadow-2xl hover:scale-[1.03] transition-all">
               Get Started Free
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
-            <Link to="/login" className="inline-flex items-center gap-2 px-7 py-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-semibold hover:border-[tomato] hover:text-[tomato] transition-all">
+            <Link to="/login" className="inline-flex items-center gap-2 px-7 py-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-semibold hover:border-[#0b24f3] hover:text-[#0b24f3] transition-all">
               Login to Account
             </Link>
           </div>
@@ -42,17 +42,73 @@ const Hero: React.FC<{ title?: string; subtitle?: string }> = ({ title, subtitle
           </div>
         </div>
 
+    <div className="relative grid grid-cols-2 gap-4 sm:gap-6 lg:gap-8 animate-in fade-in slide-in-from-right-8 duration-700">
+
+  {/* LEFT IMAGE */}
+  <div data-aos="fade-right" className="relative">
+    <img
+      src="/hero-img-2.jpg"
+      alt="Banking user"
+      className="w-full h-[320px] sm:h-[420px] lg:h-[500px] object-cover rounded-tl-[4rem] rounded-br-3xl shadow-2xl shadow-black/10 hover:scale-[1.02] transition duration-500"
+    />
+
+    {/* soft glow */}
+    <div className="absolute inset-0 rounded-tl-[4rem] rounded-br-3xl bg-gradient-to-t from-black/10 to-transparent pointer-events-none" />
+  </div>
+
+  {/* RIGHT IMAGE (OFFSET STYLE) */}
+  <div data-aos="fade-left" className="flex flex-col justify-end">
+    <img
+      src="/hero-img-3.jpg"
+      alt="Online payment"
+      className="w-full h-[350px] sm:h-[320px] lg:h-[380px] object-cover rounded-bl-[3rem] rounded-tr-3xl shadow-2xl shadow-black/10 hover:scale-[1.02] transition duration-500 mt-10 sm:mt-16"
+    />
+
+    {/* optional subtle card feel */}
+    <div className="absolute hidden lg:block w-40 h-40 bg-[tomato]/20 blur-3xl rounded-full -z-10 right-0 bottom-10" />
+  </div>
+
+  {/* Floating Active Users Card */}
+<div className="absolute top-6 left-1/2 -translate-x-1/2 sm:left-auto sm:right-6 sm:translate-x-0 z-20 animate-floatY">
+  <div className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-white/90 backdrop-blur-md shadow-xl border border-slate-100 hover:scale-105 transition">
+    
+    <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+      <Users className="w-5 h-5 text-blue-600" />
+    </div>
+
+    <div className="leading-tight">
+      <p className="text-sm font-bold text-slate-900">18.5M+</p>
+      <p className="text-xs text-slate-500">Active Users</p>
+    </div>
+  </div>
+</div>
+{/* Floating Transactions Card */}
+<div className="absolute bottom-6 left-4 sm:left-auto sm:right-10 z-20 animate-floatY [animation-delay:1.5s]">
+  <div className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-white/90 backdrop-blur-md shadow-xl border border-slate-100 hover:scale-105 transition">
+    
+    <div className="w-10 h-10 rounded-full bg-[#0b24f3]/10 flex items-center justify-center">
+      <Zap className="w-5 h-5 text-[#0b24f3]" />
+    </div>
+
+    <div className="leading-tight">
+      <p className="text-sm font-bold text-slate-900">1.2B+</p>
+      <p className="text-xs text-slate-500">Transactions Secured</p>
+    </div>
+  </div>
+</div>
+</div>
+
         {/* Floating card preview */}
-        <div className="relative animate-in fade-in slide-in-from-right-8 duration-700">
+        <div data-aos="fade-up" className="relative animate-in fade-in slide-in-from-right-8 duration-700">
           <div className="relative mx-auto max-w-md">
-            <div className="absolute -top-6 -right-6 w-32 h-32 bg-gradient-to-br from-[tomato] to-orange-500 rounded-3xl opacity-20 blur-2xl" />
+            <div className="absolute -top-6 -right-6 w-32 h-32 bg-gradient-to-br from-[#0b24f3] to-[#0b24f3] rounded-3xl opacity-20 blur-2xl" />
             <div className="relative rounded-3xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-7 shadow-2xl shadow-red-500/20 border border-slate-700/50 transform hover:-translate-y-2 transition-transform duration-500">
               <div className="flex justify-between items-start mb-12">
                 <div>
                   <p className="text-xs text-slate-400 uppercase tracking-wider">NestBank</p>
                   <p className="text-white font-bold mt-1">Platinum Card</p>
                 </div>
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[tomato] to-orange-600 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#0b24f3] to-[#0b24f3] flex items-center justify-center">
                   <Shield className="w-5 h-5 text-white" />
                 </div>
               </div>
@@ -82,8 +138,8 @@ const Hero: React.FC<{ title?: string; subtitle?: string }> = ({ title, subtitle
             </div>
             <div className="absolute -top-6 -left-10 rounded-2xl bg-white dark:bg-slate-900 shadow-2xl border border-slate-100 dark:border-slate-800 p-4 w-56 animate-in fade-in slide-in-from-top-4 duration-1000 delay-500">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[tomato]/10 flex items-center justify-center">
-                  <Zap className="w-5 h-5 text-[tomato]" />
+                <div className="w-10 h-10 rounded-full bg-[#0b24f3]/10 flex items-center justify-center">
+                  <Zap className="w-5 h-5 text-[#0b24f3]" />
                 </div>
                 <div>
                   <p className="text-xs text-slate-500">Instant transfer</p>

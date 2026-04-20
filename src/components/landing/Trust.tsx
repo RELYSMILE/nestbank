@@ -14,9 +14,9 @@ const Trust: React.FC = () => {
     <section id="trust" className="py-20 sm:py-28 bg-white dark:bg-slate-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <span className="inline-block px-3 py-1 rounded-full bg-[tomato]/10 text-[tomato] text-xs font-semibold uppercase tracking-wider mb-4">Testimonials</span>
+          <span className="inline-block px-3 py-1 rounded-full bg-[#0b24f3]/10 text-[#0b24f3] text-xs font-semibold uppercase tracking-wider mb-4">Testimonials</span>
           <h2 data-aos="zoom-in" className="text-4xl sm:text-5xl font-black tracking-tight text-slate-900 dark:text-white">
-            Loved by customers <span className="text-[tomato]">worldwide</span>
+            Loved by customers <span className="text-[#0b24f3]">worldwide</span>
           </h2>
         </div>
 
@@ -32,13 +32,32 @@ const Trust: React.FC = () => {
                 </div>
                 <div className="flex gap-0.5">
                   {Array.from({ length: t.rating }).map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-[tomato] text-[tomato]" />
+                    <Star key={i} className="w-4 h-4 fill-[[#0b24f3]] text-[#0b24f3]" />
                   ))}
                 </div>
               </div>
             </div>
           ))}
         </div>
+          <div style={{marginTop: '-2rem', marginBottom: '2rem'}} className="flex gap-4 items-center">
+            
+            <div className="w-1/2 overflow-hidden rounded-2xl shadow-lg">
+              <img
+                src="/about-img-5.jpg"
+                alt="Banking user"
+                className="w-full h-40 object-cover"
+              />
+            </div>
+
+            <div className="w-1/2 overflow-hidden rounded-2xl shadow-lg">
+              <img
+                src="/wh-img-5.jpg"
+                alt="Banking user"
+                className="w-full h-40 object-cover"
+              />
+            </div>
+
+          </div>
 
         <div className="text-center">
           <p className="text-sm text-slate-500 dark:text-slate-400 mb-4 uppercase tracking-wider font-semibold">Available in 120+ countries</p>

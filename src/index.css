@@ -130,3 +130,19 @@
 .markdown-preview ol {
   @apply my-4 ml-6;
 }
+
+@keyframes floatY {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.animate-floatY {
+  animation: floatY 3s ease-in-out infinite;
+}

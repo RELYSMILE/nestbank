@@ -35,12 +35,12 @@ const Navbar: React.FC<{ transparent?: boolean }> = ({ transparent }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
           <Link to="/" className="flex items-center gap-2.5 group">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[tomato] to-orange-600 flex items-center justify-center shadow-lg shadow-red-500/20 group-hover:scale-105 transition-transform">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#0b24f3] to-[#0b24f3] flex items-center justify-center shadow-lg shadow-red-500/20 group-hover:scale-105 transition-transform">
               <Shield className="w-5 h-5 text-white" strokeWidth={2.5} />
             </div>
             <span className="text-xl font-black tracking-tight text-slate-900 dark:text-white">
             {first}
-            <span className="text-[tomato]">
+            <span className="text-[#0b24f3]">
               {second}
             </span>
           </span>

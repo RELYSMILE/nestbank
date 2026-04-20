@@ -39,11 +39,11 @@ const Stats: React.FC = () => {
   return (
     <section id="stats" className="py-20 sm:py-28 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
       <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[tomato] opacity-20 blur-[150px] rounded-full" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#0b24f3] opacity-20 blur-[150px] rounded-full" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
-          <h2 data-aos="zoom-in" className="text-4xl sm:text-5xl font-black text-white tracking-tight">Trusted worldwide by <span className="text-[tomato]">millions</span></h2>
+          <h2 data-aos="zoom-in" className="text-4xl sm:text-5xl font-black text-white tracking-tight">Trusted worldwide by <span className="text-[#0b24f3]">millions</span></h2>
           <p className="mt-4 text-slate-300 text-lg">Join the fastest-growing digital bank on the planet.</p>
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
