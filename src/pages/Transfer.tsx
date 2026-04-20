@@ -33,39 +33,6 @@ const Transfer: React.FC = () => {
   const [searching, setSearching] = useState(false);
   const [found, setFound] = useState<any>(null);
 
-// const lookup = async () => {
-//   if (accountNum.length !== 10) {
-//     toast.error('Enter a valid 10-digit account number');
-//     return;
-//   }
-
-//   if (accountNum === user?.account_number) {
-//     toast.error('You cannot transfer to yourself');
-//     return;
-//   }
-
-//   setLoading(true);
-
-//   try {
-//     const q = collection(db, "nest_users");
-//     const snap = await getDocs(q);
-
-//     const found = snap.docs
-//       .map(d => d.data())
-//       .find((u: any) => u.account_number === accountNum);
-
-//     if (!found) throw new Error("Account not found");
-
-//     setRecipient(found);
-//     setStep('amount');
-
-//   } catch (e: any) {
-//     toast.error(e.message);
-//   } finally {
-//     setLoading(false);
-//   }
-// };
-
 useEffect(() => {
   const delay = setTimeout(() => {
     if (accountNum.length === 10) {
@@ -124,6 +91,10 @@ const handleAccountChange = async (value: string) => {
   };
 
 const submit = async () => {
+  if (user.frozen) {
+  toast.error('Your account is frozen. Contact support.');
+  return;
+}
   if (pin.length !== 4) {
     toast.error('Enter your 4-digit PIN');
     return;
@@ -205,6 +176,21 @@ const submit = async () => {
   return (
     <DashboardLayout>
       <div className="max-w-xl mx-auto">
+        {user.frozen && (
+          <div className="mb-6 p-4 rounded-xl bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900 flex items-start gap-3">
+            <AlertCircle className="w-5 h-5 text-red-600 mt-0.5" />
+            
+            <div>
+              <p className="font-semibold text-red-700 dark:text-red-400">
+                Account Restricted
+              </p>
+              <p className="text-sm text-red-600 dark:text-red-300">
+                Your account is currently restricted. You cannot perform transfers at this time.
+                Please contact customer support.
+              </p>
+            </div>
+          </div>
+        )}
         <h1 className="text-3xl font-black text-slate-900 dark:text-white mb-2">Send Money</h1>
         <p className="text-slate-500 mb-8">Transfer funds instantly to any NestBank account</p>
 
@@ -218,6 +204,7 @@ const submit = async () => {
         </div>
 
         <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-sm">
+          <div className={user.frozen? 'opacity-50 pointer-events-none' : ''}>
           {step === 'account' && (
             <div className="animate-in fade-in slide-in-from-right-4 duration-300">
               <h2 className="text-xl font-bold mb-1 text-slate-900 dark:text-white">Recipient Account</h2>
@@ -261,7 +248,7 @@ const submit = async () => {
 )}
               <button
   onClick={() => setStep('amount')}
-  disabled={!found || searching}
+  disabled={!found || searching || user.frozen}
   className="w-full mt-6 py-3.5 rounded-xl bg-[tomato] hover:bg-red-600 text-white font-semibold shadow-lg shadow-red-500/30 disabled:opacity-50 flex items-center justify-center gap-2"
 >
   Continue <ArrowRight className="w-4 h-4" />
@@ -333,7 +320,7 @@ const submit = async () => {
               </div>
               <div className="flex gap-3 mt-6">
                 <button onClick={() => setStep('amount')} className="flex-1 py-3 rounded-xl border border-slate-200 dark:border-slate-700 font-semibold">Back</button>
-                <button onClick={submit} disabled={loading || pin.length !== 4} className="flex-1 py-3 rounded-xl bg-[tomato] hover:bg-red-600 text-white font-semibold shadow-lg shadow-red-500/30 disabled:opacity-50 flex items-center justify-center gap-2">
+                <button onClick={submit} disabled={loading || pin.length !== 4 || user.frozen} className="flex-1 py-3 rounded-xl bg-[tomato] hover:bg-red-600 text-white font-semibold shadow-lg shadow-red-500/30 disabled:opacity-50 flex items-center justify-center gap-2">
                   {loading && <Loader2 className="w-4 h-4 animate-spin" />}
                   Send Now
                 </button>
@@ -361,8 +348,10 @@ const submit = async () => {
               </div>
             </div>
           )}
+        
         </div>
-      </div>
+          </div>
+        </div>
     </DashboardLayout>
   );
 };

@@ -100,6 +100,24 @@ const unsub2 = onSnapshot(q2, (snapshot) => {
           <p className="text-slate-500 mt-1">Here's what's happening with your account today.</p>
         </div>
 
+        {user.frozen && (
+            <div className="mt-4 rounded-2xl border border-red-200 bg-red-50 dark:bg-red-950/30 dark:border-red-800 p-4 flex items-start gap-3">
+              <div className="w-10 h-10 rounded-full bg-red-100 dark:bg-red-900 flex items-center justify-center">
+                ⚠️
+              </div>
+
+              <div className="flex-1">
+                <h3 className="text-sm font-bold text-red-700 dark:text-red-400">
+                  Account Frozen
+                </h3>
+                <p className="text-xs text-red-600 dark:text-red-300 mt-1">
+                  Your account has been temporarily restricted. You cannot perform transactions at the moment.
+                  Please contact customer support for assistance.
+                </p>
+              </div>
+            </div>
+          )}
+
         {/* Balance Card */}
         <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-red-950 to-slate-900 p-8 text-white shadow-2xl shadow-red-500/20">
           <div className="absolute top-0 right-0 w-96 h-96 bg-[tomato] opacity-20 rounded-full blur-[120px]" />
@@ -146,7 +164,19 @@ const unsub2 = onSnapshot(q2, (snapshot) => {
             { to: '/cards', icon: CreditCard, label: 'Cards', color: 'from-green-500 to-green-600' },
 
           ].map((a) => (
-            <Link key={a.label} to={a.to} className="group p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-[tomato]/30 hover:-translate-y-1 hover:shadow-xl transition-all">
+            <Link
+              key={a.label}
+              to={user.frozen ? "#" : a.to}
+              onClick={(e) => {
+                if (user.frozen) {
+                  e.preventDefault();
+                  toast.error('Account is frozen');
+                }
+              }}
+              className={`group p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 transition-all
+                ${user.frozen ? 'opacity-50 cursor-not-allowed' : 'hover:border-[tomato]/30 hover:-translate-y-1 hover:shadow-xl'}
+              `}
+            >
               <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${a.color} flex items-center justify-center mb-3 group-hover:scale-110 transition`}>
                 <a.icon className="w-6 h-6 text-white" strokeWidth={2.5} />
               </div>

@@ -100,6 +100,10 @@ useEffect(() => {
   if (!user?.uid) return null;
 
   const createCard = async () => {
+    if (user.frozen) {
+        toast.error('Your account is restricted');
+        return;
+      }
     setCreating(true);
     try {
       const exp = genExpiry();
@@ -128,6 +132,10 @@ useEffect(() => {
   };
 
  const toggleFreeze = async (card: CardData) => {
+  if (user.frozen) {
+      toast.error('Action not allowed. Account restricted');
+      return;
+    }
   try {
     await updateDoc(doc(db, 'nest_cards', card.id), {
       frozen: !card.frozen
@@ -146,7 +154,11 @@ useEffect(() => {
 };
 
   const deleteCard = async (card: CardData) => {
-  if (!confirm('Delete this card permanently?')) return;
+    if (user.frozen) {
+      toast.error('Action not allowed. Account restricted');
+      return;
+    }
+    if (!confirm('Delete this card permanently?')) return;
 
   try {
     await deleteDoc(doc(db, 'nest_cards', card.id));
@@ -160,6 +172,10 @@ useEffect(() => {
 };
 
   const saveLimit = async () => {
+    if (user.frozen) {
+  toast.error('Action not allowed. Account restricted');
+  return;
+}
   if (!editLimit) return;
 
   const v = Number(editLimit.value);
@@ -186,62 +202,93 @@ useEffect(() => {
   return (
     <DashboardLayout>
       <div className="max-w-6xl mx-auto">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-          <div>
-            <h1 className="text-3xl font-black text-slate-900 dark:text-white">Virtual Cards</h1>
-            <p className="text-slate-500 mt-1">Generate unlimited virtual cards for safer online shopping</p>
-          </div>
-          <button onClick={() => setShowCreate(true)} className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[tomato] hover:bg-red-600 text-white font-semibold shadow-lg shadow-red-500/30 hover:scale-[1.02] transition">
-            <Plus className="w-4 h-4" /> New Card
-          </button>
-        </div>
+        {user.frozen && (
+          <div className="mb-6 p-4 rounded-xl bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900 flex items-start gap-3">
+            <Flame className="w-5 h-5 text-red-600 mt-0.5" />
 
-        {loading ? (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[1, 2, 3].map((i) => <div key={i} className="aspect-[1.586/1] rounded-2xl bg-slate-100 dark:bg-slate-800 animate-pulse" />)}
-          </div>
-        ) : cards.length === 0 ? (
-          <div className="text-center py-20 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800">
-            <div className="w-16 h-16 rounded-2xl bg-[tomato]/10 flex items-center justify-center mx-auto mb-4">
-              <CreditCard className="w-8 h-8 text-[tomato]" />
+            <div>
+              <p className="font-semibold text-red-700 dark:text-red-400">
+                Account Restricted
+              </p>
+              <p className="text-sm text-red-600 dark:text-red-300">
+                Your account is currently restricted. You cannot manage or create cards.
+                Please contact customer support.
+              </p>
             </div>
-            <h3 className="text-xl font-bold text-slate-900 dark:text-white">No cards yet</h3>
-            <p className="text-slate-500 mt-2 mb-6">Create your first virtual card to start shopping safely online.</p>
-            <button onClick={() => setShowCreate(true)} className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[tomato] text-white font-semibold shadow-lg shadow-red-500/30">
-              <Plus className="w-4 h-4" /> Create your first card
-            </button>
-          </div>
-        ) : (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {cards.map((c) => (
-              <div key={c.id} className="group">
-                <VirtualCard card={c} onClick={() => setSelected(c)} />
-                <div className="mt-4 flex items-center justify-between">
-                  <div>
-                    <p className="text-xs text-slate-500">Spent this month</p>
-                    <p className="text-sm font-bold text-slate-900 dark:text-white">
-                      $${Number(c.spent).toFixed(2)}
-                      {c.spending_limit > 0 && <span className="text-slate-400 font-normal"> / ${Number(c.spending_limit).toFixed(2)}</span>}
-                    </p>
-                  </div>
-                  <div className="flex gap-1">
-                    <button onClick={() => toggleFreeze(c)} className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700" title={c.frozen ? 'Unfreeze' : 'Freeze'}>
-                      {c.frozen ? <Flame className="w-4 h-4 text-orange-500" /> : <Snowflake className="w-4 h-4 text-cyan-600" />}
-                    </button>
-                    <button onClick={() => deleteCard(c)} className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-red-100 dark:hover:bg-red-950/30 hover:text-red-600 transition">
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-                {c.spending_limit > 0 && (
-                  <div className="mt-2 h-1.5 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
-                    <div className="h-full bg-gradient-to-r from-[tomato] to-orange-500 transition-all" style={{ width: `${Math.min(100, (Number(c.spent) / Number(c.spending_limit)) * 100)}%` }} />
-                  </div>
-                )}
-              </div>
-            ))}
           </div>
         )}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+            <div>
+              <h1 className="text-3xl font-black text-slate-900 dark:text-white">Virtual Cards</h1>
+              <p className="text-slate-500 mt-1">Generate unlimited virtual cards for safer online shopping</p>
+            </div>
+            <button
+              onClick={() => {
+                if (user.frozen) {
+                  toast.error('Your account is restricted. You cannot create cards. Contact support.');
+                  return;
+                }
+                setShowCreate(true);
+              }}
+              className={`inline-flex items-center gap-2 px-5 py-3 rounded-xl text-white font-semibold shadow-lg transition
+                ${user.frozen
+                  ? 'bg-gray-400 cursor-not-allowed'
+                  : 'bg-[tomato] hover:bg-red-600 hover:scale-[1.02] shadow-red-500/30'}
+              `}
+            >
+              <Plus className="w-4 h-4" />
+              New Card
+            </button>
+          </div>
+
+          <div className={user.frozen ? 'opacity-50 pointer-events-none' : ''}>
+          {loading ? (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[1, 2, 3].map((i) => <div key={i} className="aspect-[1.586/1] rounded-2xl bg-slate-100 dark:bg-slate-800 animate-pulse" />)}
+            </div>
+          ) : cards.length === 0 ? (
+            <div className="text-center py-20 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800">
+              <div className="w-16 h-16 rounded-2xl bg-[tomato]/10 flex items-center justify-center mx-auto mb-4">
+                <CreditCard className="w-8 h-8 text-[tomato]" />
+              </div>
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white">No cards yet</h3>
+              <p className="text-slate-500 mt-2 mb-6">Create your first virtual card to start shopping safely online.</p>
+              <button onClick={() => setShowCreate(true)} disabled={user.frozen} className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[tomato] text-white font-semibold shadow-lg shadow-red-500/30 disabled:opacity-50">
+                <Plus className="w-4 h-4" /> Create your first card
+              </button>
+            </div>
+          ) : (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {cards.map((c) => (
+                <div key={c.id} className="group">
+                  <VirtualCard card={c} onClick={() => setSelected(c)} />
+                  <div className="mt-4 flex items-center justify-between">
+                    <div>
+                      <p className="text-xs text-slate-500">Spent this month</p>
+                      <p className="text-sm font-bold text-slate-900 dark:text-white">
+                        $${Number(c.spent).toFixed(2)}
+                        {c.spending_limit > 0 && <span className="text-slate-400 font-normal"> / ${Number(c.spending_limit).toFixed(2)}</span>}
+                      </p>
+                    </div>
+                    <div className="flex gap-1">
+                      <button onClick={() => toggleFreeze(c)} disabled={user.frozen} className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50" title={c.frozen ? 'Unfreeze' : 'Freeze'}>
+                        {c.frozen ? <Flame className="w-4 h-4 text-orange-500" /> : <Snowflake className="w-4 h-4 text-cyan-600" />}
+                      </button>
+                      <button onClick={() => deleteCard(c)} disabled={user.frozen} className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-red-100 dark:hover:bg-red-950/30 hover:text-red-600 transition disabled:opacity-50" title="Delete">
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                  {c.spending_limit > 0 && (
+                    <div className="mt-2 h-1.5 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                      <div className="h-full bg-gradient-to-r from-[tomato] to-orange-500 transition-all" style={{ width: `${Math.min(100, (Number(c.spent) / Number(c.spending_limit)) * 100)}%` }} />
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
 
         {/* Create Modal */}
         {showCreate && (
@@ -291,7 +338,7 @@ useEffect(() => {
 
               <div className="flex gap-3 mt-6">
                 <button onClick={() => setShowCreate(false)} className="flex-1 py-3 rounded-xl border border-slate-200 dark:border-slate-700 font-semibold">Cancel</button>
-                <button onClick={createCard} disabled={creating} className="flex-1 py-3 rounded-xl bg-[tomato] hover:bg-red-600 text-white font-semibold shadow-lg shadow-red-500/30 disabled:opacity-50 flex items-center justify-center gap-2">
+                <button onClick={createCard} disabled={creating || user.frozen} className="flex-1 py-3 rounded-xl bg-[tomato] hover:bg-red-600 text-white font-semibold shadow-lg shadow-red-500/30 disabled:opacity-50 flex items-center justify-center gap-2">
                   {creating && <Loader2 className="w-4 h-4 animate-spin" />}
                   Create Card
                 </button>

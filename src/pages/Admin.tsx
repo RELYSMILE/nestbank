@@ -11,7 +11,7 @@ import {
 } from 'firebase/firestore';
 import { db } from '@/lib/Config';
 import DashboardLayout from '@/components/DashboardLayout';
-import { Users, DollarSign, Activity, Search, Edit2, Ban, CheckCircle2, Loader2 } from 'lucide-react';
+import { Users, DollarSign, Activity, Search, Edit2, Ban, CheckCircle2, Loader2, Snowflake  } from 'lucide-react';
 import { toast } from 'sonner';
 
 const Admin: React.FC = () => {
@@ -130,6 +130,23 @@ const toggleBlock = async (u: any) => {
   }
 };
 
+const toggleFreeze = async (u: any) => {
+  try {
+    const userRef = doc(db, 'nest_users', u.uid);
+
+    const newStatus = !(u.frozen ?? false);
+
+    await updateDoc(userRef, {
+      frozen: newStatus
+    });
+
+    toast.success(newStatus ? 'Account frozen' : 'Account unfrozen');
+  } catch (err: any) {
+    console.error("FREEZE ERROR:", err);
+    toast.error(err.message || 'Action failed');
+  }
+};
+
 const formatDate = (d: any) => {
   if (!d) return '—';
   return d?.toDate
@@ -184,11 +201,55 @@ const formatDate = (d: any) => {
                       <td className="py-3 px-2 font-mono text-xs">{u.account_number}</td>
                       <td className="py-3 px-2 font-bold text-slate-900 dark:text-white">${Number(u.balance).toLocaleString('en-US', { minimumFractionDigits: 2 })}</td>
                       <td className="py-3 px-2"><span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase ${u.role === 'admin' ? 'bg-[tomato]/10 text-[tomato]' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}`}>{u.role}</span></td>
-                      <td className="py-3 px-2">{u.blocked ? <span className="text-red-600 text-xs font-semibold">Blocked</span> : <span className="text-green-600 text-xs font-semibold">Active</span>}</td>
+                      <td className="py-3 px-2">
+                        {u.blocked ? (
+                          <span className="text-red-600 text-xs font-semibold">Blocked</span>
+                        ) : u.frozen ? (
+                          <span className="text-blue-600 text-xs font-semibold">Frozen</span>
+                        ) : (
+                          <span className="text-green-600 text-xs font-semibold">Active</span>
+                        )}
+                      </td>
                       <td className="py-3 px-2">
                         <div className="flex gap-2">
-                          <button onClick={() => { setEditing(u); setNewBal(String(u.balance)); setNewRole(u.role || 'user'); }} className="p-1.5 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700" title="Edit balance"><Edit2 className="w-4 h-4" /></button>
-                          <button onClick={() => toggleBlock(u)} className="p-1.5 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700" title={u.blocked ? 'Unblock' : 'Block'}>{u.blocked ? <CheckCircle2 className="w-4 h-4 text-green-600" /> : <Ban className="w-4 h-4 text-red-600" />}</button>
+                          {/* EDIT */}
+                          <button
+                            onClick={() => {
+                              setEditing(u);
+                              setNewBal(String(u.balance));
+                              setNewRole(u.role || 'user');
+                            }}
+                            className="p-1.5 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700"
+                            title="Edit"
+                          >
+                            <Edit2 className="w-4 h-4" />
+                          </button>
+
+                          {/* BLOCK */}
+                          <button
+                            onClick={() => toggleBlock(u)}
+                            className="p-1.5 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700"
+                            title={u.blocked ? 'Unblock' : 'Block'}
+                          >
+                            {u.blocked ? (
+                              <CheckCircle2 className="w-4 h-4 text-green-600" />
+                            ) : (
+                              <Ban className="w-4 h-4 text-red-600" />
+                            )}
+                          </button>
+
+                          {/* FREEZE */}
+                          <button
+                            onClick={() => toggleFreeze(u)}
+                            className="p-1.5 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700"
+                            title={u.frozen ? 'Unfreeze account' : 'Freeze account'}
+                          >
+                            <Snowflake
+                              className={`w-4 h-4 ${
+                                u.frozen ? 'text-blue-600' : 'text-slate-500'
+                              }`}
+                            />
+                          </button>
                         </div>
                       </td>
                     </tr>
