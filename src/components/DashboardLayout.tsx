@@ -28,9 +28,9 @@ const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ children }) 
     }, []);
   
     const appName  = settings?.app_name || 'NEST BANK';
-    const nameParts = appName.split(' ');
-    const first = nameParts[0] || 'NEST';
-    const second = nameParts.slice(1).join(' ');
+    const cleanName = appName.replace(/\s+/g, '');
+    const first = cleanName.slice(0, 4);   // NEST
+    const second = cleanName.slice(4);     // BANK
 
   const items = user?.role === 'admin'
     ? [
@@ -59,7 +59,7 @@ const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ children }) 
             </div>
             <span className="text-xl font-black tracking-tight text-slate-900 dark:text-white">
             {first}
-            <span className="text-[tomato] ml-1">
+            <span className="text-[tomato]">
               {second}
             </span>
           </span>

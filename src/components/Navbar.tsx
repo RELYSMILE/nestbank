@@ -26,9 +26,9 @@ const Navbar: React.FC<{ transparent?: boolean }> = ({ transparent }) => {
   }, []);
 
   const appName  = settings?.app_name || 'NEST BANK';
-  const nameParts = appName.split(' ');
-  const first = nameParts[0] || 'NEST';
-  const second = nameParts.slice(1).join(' ');
+  const cleanName = appName.replace(/\s+/g, '');
+  const first = cleanName.slice(0, 4);   // NEST
+  const second = cleanName.slice(4);     // BANK
 
   return (
     <nav className={`${transparent ? 'absolute top-0 left-0 right-0 z-40 bg-transparent' : 'sticky top-0 z-40 bg-white/80 dark:bg-slate-950/80 backdrop-blur-lg border-b border-slate-200 dark:border-slate-800'}`}>
@@ -40,7 +40,7 @@ const Navbar: React.FC<{ transparent?: boolean }> = ({ transparent }) => {
             </div>
             <span className="text-xl font-black tracking-tight text-slate-900 dark:text-white">
             {first}
-            <span className="text-[tomato] ml-1">
+            <span className="text-[tomato]">
               {second}
             </span>
           </span>
