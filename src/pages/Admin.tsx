@@ -28,6 +28,7 @@ const [txLoaded, setTxLoaded] = useState(false);
 const [saving, setSaving] = useState(false);
 const [selectedTx, setSelectedTx] = useState<any>(null);
 const [newRole, setNewRole] = useState('user');
+const [newAccountNumber, setNewAccountNumber] = useState('');
 
  useEffect(() => {
   if (!user) return;
@@ -102,7 +103,8 @@ useEffect(() => {
 
     await updateDoc(userRef, {
       balance: bal,
-      role: newRole // 👈 add this
+      role: newRole,
+      account_number: newAccountNumber
     });
 
     toast.success('User updated successfully');
@@ -233,6 +235,7 @@ const formatDate = (d: any) => {
                               setEditing(u);
                               setNewBal(String(u.balance));
                               setNewRole(u.role || 'user');
+                              setNewAccountNumber(u.account_number || '');
                             }}
                             className="p-1.5 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700"
                             title="Edit"
@@ -305,7 +308,14 @@ const formatDate = (d: any) => {
           <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4" onClick={() => setEditing(null)}>
             <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 max-w-md w-full" onClick={(e) => e.stopPropagation()}>
               <h3 className="text-lg font-bold mb-4">Manage User — {editing.name}</h3>
+              <label className="block text-sm font-semibold text-slate-600 dark:text-slate-300 mb-2">
+                  Upgrade Balance
+              </label>
               <input type="number" value={newBal} onChange={(e) => setNewBal(e.target.value)} className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 outline-none focus:border-[tomato]" />
+              <label className="block text-sm font-semibold text-slate-600 dark:text-slate-300 mb-2">
+                  Account Number
+              </label>
+              <input type="text" value={newAccountNumber} onChange={(e) => setNewAccountNumber(e.target.value)} className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 outline-none focus:border-[tomato]" />
               {/* ROLE SELECT */}
               <div className="mt-4">
                 <label className="block text-sm font-semibold text-slate-600 dark:text-slate-300 mb-2">

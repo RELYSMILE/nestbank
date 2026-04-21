@@ -380,14 +380,15 @@ const submit = async () => {
                 <p className="text-sm text-slate-500">You are sending</p>
                 <p className="text-5xl font-black text-[#0b24f3] mt-2">${Number(amount).toLocaleString('en-US', { minimumFractionDigits: 2 })}</p>
               </div>
-              <div className="space-y-3 p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/50">
+              <div style={{ textTransform: 'capitalize' }} className="space-y-3 p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/50">
                 <Row label="To" value={recipient.name} />
                 <Row label="Account" value={recipient.account_number} />
-                <Row label="Bank" value={bankName || recipient?.bank_name} />
+                <Row label="Account Type" value={recipient?.account_type} />
+                <Row label="Bank Name" value={bankName || recipient?.bank_name} />
                 <Row label="COT" value={cot} />
                 <Row label="TAX" value={tax} />
                 <Row label="IMF" value={imf} />
-                {note && <Row label="Note" value={note} />}
+                {note && <Row label="Narration" value={note} />}
                 <Row label="Fee" value="$0.00" />
               </div>
               <div className="mt-6">

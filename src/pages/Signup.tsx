@@ -15,7 +15,8 @@ const Signup: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     name: '', email: '', phone: '', country: 'US',
-    password: '', confirm: '', pin: '', confirmPin: ''
+    password: '', confirm: '', pin: '', confirmPin: '',
+    accountType: 'savings'
   });
   const [show, setShow] = useState(false);
 
@@ -67,6 +68,7 @@ const submit = async () => {
       email: form.email,
       phone: form.phone,
       country: form.country,
+      account_type: form.accountType,
       account_number: accountNumber,
       bank_name: "NESTBANK",
       balance: 0,
@@ -133,6 +135,19 @@ const submit = async () => {
                     <input type="tel" value={form.phone} onChange={(e) => update('phone', e.target.value)} placeholder={`${selectedCountry?.dial} 555 123 4567`}
                       className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:border-[tomato] focus:ring-2 focus:ring-[tomato]/20 outline-none" />
                   </div>
+                  <div>
+                  <label className="block text-sm font-semibold text-slate-700 dark:text-slate-200 mb-2">
+                    Account Type
+                  </label>
+                  <select
+                    value={form.accountType}
+                    onChange={(e) => update('accountType', e.target.value)}
+                    className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:border-[tomato] focus:ring-2 focus:ring-[tomato]/20 outline-none"
+                  >
+                    <option value="savings">Savings</option>
+                    <option value="current">Current</option>
+                  </select>
+                </div>
                 </div>
               </div>
             </div>
@@ -173,6 +188,7 @@ const submit = async () => {
                 <Row label="Full Name" value={form.name} />
                 <Row label="Email" value={form.email} />
                 <Row label="Phone" value={`${selectedCountry?.dial} ${form.phone}`} />
+                <Row label="Account Type" value={form.accountType} />
                 <Row label="Country" value={`${selectedCountry?.flag} ${selectedCountry?.name}`} />
                 <Row label="Password" value={'•'.repeat(form.password.length)} />
                 <Row label="PIN" value="••••" />
