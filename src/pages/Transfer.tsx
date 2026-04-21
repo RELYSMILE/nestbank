@@ -31,6 +31,7 @@ const Transfer: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<any>(null);
   const [searching, setSearching] = useState(false);
+  const [bankName, setBankName] = useState('');
   const [found, setFound] = useState<any>(null);
   const [cot, setCot] = useState('');
   const [tax, setTax] = useState('');
@@ -155,6 +156,7 @@ const submit = async () => {
           receiver_name: receiverData.name,
           sender_account: senderData.account_number,
           receiver_account: receiverData.account_number,
+          receiver_bank: bankName || recipient?.bank_name,
           amount: amountNum,
           note: note || "",
           status: "success",
@@ -195,7 +197,7 @@ const submit = async () => {
           </div>
         )}
         <h1 className="text-3xl font-black text-slate-900 dark:text-white mb-2">Send Money</h1>
-        <p className="text-slate-500 mb-8">Transfer funds instantly to any NestBank account</p>
+        <p className="text-slate-500 mb-8">Transfer funds instantly to any Bank or NestBank account</p>
 
         {/* Stepper */}
         <div className="flex items-center gap-2 mb-8">
@@ -222,36 +224,51 @@ const submit = async () => {
                   className="w-full pl-12 pr-4 py-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:border-[#0b24f3] focus:ring-2 focus:ring-[#0b24f3]/20 outline-none font-mono text-lg tracking-widest"
                 />
               </div>
+              {/* BANK NAME INPUT */}
+              {found && (
+              <div className="mt-4">
+                <label className="block text-sm font-semibold text-slate-700 dark:text-slate-200 mb-2">
+                  Bank Name
+                </label>
+
+                <input
+                  value={bankName}
+                  onChange={(e) => setBankName(e.target.value)}
+                  placeholder="Enter bank name (e.g. Bank of America)"
+                  className="w-full px-4 py-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:border-[#0b24f3] focus:ring-2 focus:ring-[#0b24f3]/20 outline-none"
+                />
+              </div>
+              )}
               {searching && (
-  <p className="text-sm text-slate-500 mt-3">Searching account...</p>
-)}
+              <p className="text-sm text-slate-500 mt-3">Searching account...</p>
+            )}
 
-{found && (
-  <div className="mt-4 p-4 rounded-xl bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-900/50 flex items-center gap-3">
-    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#0b24f3] to-[#0b24f3] flex items-center justify-center text-white font-bold">
-      {found.name?.charAt(0)}
-    </div>
+        {found && (
+          <div className="mt-4 p-4 rounded-xl bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-900/50 flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#0b24f3] to-[#0b24f3] flex items-center justify-center text-white font-bold">
+              {found.name?.charAt(0)}
+            </div>
 
-    <div className="flex-1">
-      <p className="font-bold text-slate-900 dark:text-white">{found.name}</p>
-      <p className="text-xs text-slate-500">
-        {found.bank_name} • {found.account_number}
-      </p>
-    </div>
+            <div className="flex-1">
+              <p className="font-bold text-slate-900 dark:text-white">{found.name}</p>
+              <p className="text-xs text-slate-500">
+                Transer • {found.account_number}
+              </p>
+            </div>
 
-    <Check className="w-5 h-5 text-green-600" />
-  </div>
-)}
+            <Check className="w-5 h-5 text-green-600" />
+          </div>
+        )}
 
-{accountNum.length === 10 && !found && !searching && (
-  <div className="mt-3 flex items-center gap-2 text-red-500 text-sm">
-    <AlertCircle className="w-4 h-4" />
-    Account not found
-  </div>
-)}
+        {accountNum.length === 10 && !found && !searching && (
+          <div className="mt-3 flex items-center gap-2 text-red-500 text-sm">
+            <AlertCircle className="w-4 h-4" />
+            Account not found
+          </div>
+        )}
         <button
             onClick={() => setStep('charges')}
-              disabled={!found || searching || user.frozen}
+              disabled={(!found && !bankName)|| searching || user.frozen}
               className="w-full mt-6 py-3.5 rounded-xl bg-[#0b24f3] hover:bg-[#0b24f3]/80 text-white font-semibold shadow-lg shadow-[#0b24f3]/30 disabled:opacity-50 flex items-center justify-center gap-2"
             >
               Continue <ArrowRight className="w-4 h-4" />
@@ -366,7 +383,7 @@ const submit = async () => {
               <div className="space-y-3 p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/50">
                 <Row label="To" value={recipient.name} />
                 <Row label="Account" value={recipient.account_number} />
-                <Row label="Bank" value={recipient.bank_name} />
+                <Row label="Bank" value={bankName || recipient?.bank_name} />
                 <Row label="COT" value={cot} />
                 <Row label="TAX" value={tax} />
                 <Row label="IMF" value={imf} />
