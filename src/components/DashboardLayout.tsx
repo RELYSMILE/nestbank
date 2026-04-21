@@ -5,6 +5,7 @@ import { useTheme } from "@/components/theme-provider";
 import { Shield, LayoutDashboard, Send, History, User, LogOut, Moon, Sun, Settings, Users, Menu, X, CreditCard } from 'lucide-react';
 import { doc, getDoc, onSnapshot } from 'firebase/firestore';
 import { db } from '@/lib/Config';
+import defaultAvatar from '../assets/defaultAvatar.jpeg';
 
 const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, signOut } = useAuth();
@@ -108,9 +109,11 @@ const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ children }) 
               <p className="text-sm font-semibold text-slate-900 dark:text-white">{user?.name}</p>
               <p className="text-xs text-slate-500">{user?.role === 'admin' ? 'Administrator' : user?.account_number}</p>
             </div>
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#0b24f3] to-[#0b24f3] flex items-center justify-center text-white font-bold">
-              {user?.name?.charAt(0).toUpperCase()}
-            </div>
+            <img
+              src={defaultAvatar}
+              alt="Profile"
+              className="w-10 h-10 rounded-full object-cover border-2 border-slate-200 dark:border-slate-700 shadow-sm"
+            />
           </div>
         </header>
         <main className="flex-1 p-4 sm:p-8 animate-in fade-in duration-300">{children}</main>
