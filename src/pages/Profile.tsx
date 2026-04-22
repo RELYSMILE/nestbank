@@ -3,6 +3,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import DashboardLayout from '@/components/DashboardLayout';
 import { User, Mail, Phone, Globe, CreditCard, Calendar, Shield } from 'lucide-react';
 import { countries } from '@/lib/countries';
+import defaultAvatar from '../assets/defaultAvatar.jpeg';
 
 const Profile: React.FC = () => {
   const { user } = useAuth();
@@ -29,9 +30,11 @@ const Profile: React.FC = () => {
 
         <div className="rounded-3xl bg-gradient-to-br from-[#0b24f3] to-[#0b24f3] p-8 text-white shadow-xl mb-6">
           <div className="flex items-center gap-5">
-            <div className="w-20 h-20 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-4xl font-black border-2 border-white/30">
-              {user.name.charAt(0).toUpperCase()}
-            </div>
+            <img
+              src={user?.avatar || defaultAvatar}
+              alt="Profile"
+              className="w-20 h-20 rounded-full object-cover border-2 border-slate-200 dark:border-slate-700 shadow-sm"
+            />
             <div>
               <h2 className="text-2xl font-black">{user.name}</h2>
               <p className="text-white/80">{user.email}</p>

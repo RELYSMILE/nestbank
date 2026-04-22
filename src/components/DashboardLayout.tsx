@@ -110,7 +110,7 @@ const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ children }) 
               <p className="text-xs text-slate-500">{user?.role === 'admin' ? 'Administrator' : user?.account_number}</p>
             </div>
             <img
-              src={defaultAvatar}
+              src={user?.avatar || defaultAvatar}
               alt="Profile"
               className="w-10 h-10 rounded-full object-cover border-2 border-slate-200 dark:border-slate-700 shadow-sm"
             />

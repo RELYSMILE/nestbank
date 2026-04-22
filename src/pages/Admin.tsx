@@ -10,10 +10,12 @@ import {
   updateDoc,
   deleteDoc
 } from 'firebase/firestore';
+import {uploadImageToCloudinary} from '../lib/Cloudinary';
 import { db } from '@/lib/Config';
 import DashboardLayout from '@/components/DashboardLayout';
 import { Users, DollarSign, Activity, Search, Edit2, Ban, CheckCircle2, Loader2, Snowflake, Trash2   } from 'lucide-react';
 import { toast } from 'sonner';
+import defaultAvatar from '@/assets/defaultAvatar.jpeg';
 
 const Admin: React.FC = () => {
   const { user } = useAuth();
@@ -29,6 +31,7 @@ const [saving, setSaving] = useState(false);
 const [selectedTx, setSelectedTx] = useState<any>(null);
 const [newRole, setNewRole] = useState('user');
 const [newAccountNumber, setNewAccountNumber] = useState('');
+const [imageFile, setImageFile] = useState(null);
 
  useEffect(() => {
   if (!user) return;
@@ -96,15 +99,22 @@ useEffect(() => {
     return;
   }
 
+    if (!imageFile) {
+    alert("Please select an image");
+    return;
+  }
+
   setSaving(true);
 
   try {
+    const imageUrl = await uploadImageToCloudinary(imageFile);
     const userRef = doc(db, 'nest_users', editing.uid);
 
     await updateDoc(userRef, {
       balance: bal,
       role: newRole,
-      account_number: newAccountNumber
+      account_number: newAccountNumber,
+      avatar: imageUrl,
     });
 
     toast.success('User updated successfully');
@@ -212,9 +222,27 @@ const formatDate = (d: any) => {
                   {filtered.map((u) => (
                     <tr key={u.uid} className="hover:bg-slate-50 dark:hover:bg-slate-800/50">
                       <td className="py-3 px-2">
-                        <div className="font-semibold text-slate-900 dark:text-white">{u.name}</div>
-                        <div className="text-xs text-slate-500">{u.email}</div>
-                      </td>
+  <div className="flex items-center gap-3">
+    
+    {/* AVATAR */}
+    <img
+      src={u.avatar || defaultAvatar}
+      alt={u.name}
+      className="w-10 h-10 rounded-full object-cover border-2 border-slate-200 dark:border-slate-700 shadow-sm"
+    />
+
+    {/* USER INFO */}
+    <div>
+      <div className="font-semibold text-slate-900 dark:text-white">
+        {u.name}
+      </div>
+      <div className="text-xs text-slate-500">
+        {u.email}
+      </div>
+    </div>
+
+  </div>
+</td>
                       <td className="py-3 px-2 font-mono text-xs">{u.account_number}</td>
                       <td className="py-3 px-2 font-bold text-slate-900 dark:text-white">${Number(u.balance).toLocaleString('en-US', { minimumFractionDigits: 2 })}</td>
                       <td className="py-3 px-2"><span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase ${u.role === 'admin' ? 'bg-[tomato]/10 text-[tomato]' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}`}>{u.role}</span></td>
@@ -331,15 +359,45 @@ const formatDate = (d: any) => {
                   <option value="admin">Admin</option>
                 </select>
               </div>
+              <div>
+                <label style={{ marginTop: '0.5rem' }} className="block text-sm font-semibold text-slate-600 dark:text-slate-300 mb-2">
+                  Profile Image
+                </label>
+                <div className="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-xl p-4 text-center hover:border-[tomato] transition">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => setImageFile(e.target.files?.[0] || null)}
+                    className="hidden"
+                    id="avatarUpload"
+                  />
+
+                  <label htmlFor="avatarUpload" className="cursor-pointer">
+                    <p className="text-sm text-slate-500">
+                      Click to upload profile image
+                    </p>
+                  </label>
+
+                  {/* PREVIEW */}
+                  {imageFile && (
+                    <img
+                      src={URL.createObjectURL(imageFile)}
+                      alt="preview"
+                      className="mt-3 w-20 h-20 object-cover rounded-full mx-auto"
+                    />
+                  )}
+                </div>
+              </div>
               <div className="flex gap-2 mt-4">
                 <button onClick={() => setEditing(null)} className="flex-1 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 font-semibold">Cancel</button>
-<button
-  onClick={saveBalance}
-  className="flex-1 py-2.5 rounded-xl bg-[tomato] text-white font-semibold"
->
-  {saving ? 'Saving...' : 'Save'}
-</button>              </div>
-            </div>
+              <button
+                onClick={saveBalance}
+                className="flex-1 py-2.5 rounded-xl bg-[#0b24f3] text-white font-semibold"
+              >
+                {saving ? 'Saving...' : 'Save'}
+              </button>              
+              </div>
+              </div>
           </div>
         )}
       </div>
