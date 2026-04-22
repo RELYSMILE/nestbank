@@ -10,7 +10,7 @@ import {
   updateDoc,
   deleteDoc
 } from 'firebase/firestore';
-import {uploadImageToCloudinary} from '../lib/Cloudinary';
+import { uploadImageToCloudinary } from '@/lib/cloudinary';
 import { db } from '@/lib/Config';
 import DashboardLayout from '@/components/DashboardLayout';
 import { Users, DollarSign, Activity, Search, Edit2, Ban, CheckCircle2, Loader2, Snowflake, Trash2   } from 'lucide-react';
